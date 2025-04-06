@@ -1,12 +1,14 @@
 import sys
 import random
 
-print("Welcome to Numborio!")
+print("Welcome to Numborio! You get 3 points for a good answer and minus 1 point for the wrong one. Good luck!")
+print("Type q and press enter to exit the game.")
 
-currentQuestionNo = 0
-maxQuestions = 3
+score = 0
+goodAnswerScore = 3
+badAnswerScore = -1
 
-while currentQuestionNo < maxQuestions:
+while True:
     a = random.randint(0, 9)
     b = random.randint(0, 9)
     result = a + b
@@ -14,10 +16,16 @@ while currentQuestionNo < maxQuestions:
     print(str(a) + " + " + str(b) + " = ")
 
     for answer in sys.stdin:
-        if (int(answer) == result):
-            print("Good job")
+        answer = answer.strip()
+        
+        if answer == 'q':
+            print("Your final score is " + str(score))
+            sys.exit(0)
+        elif answer.isdigit() and int(answer) == result:
+            score += goodAnswerScore
+            print("Good job. Your current score is " + str(score))
         else:
-            print("Wrong answer. Correct answer is " + str(result))
+            if score > 0:
+                score += badAnswerScore
+            print("Wrong answer. Correct answer is " + str(result) + ". Your current score is " + str(score))
         break
-
-    currentQuestionNo += 1
